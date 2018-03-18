@@ -79,7 +79,7 @@ Copyright
 ---------
 
 * Copyright Roy Rosenzweig Center for History and New Media, 2010-2016
-* Copyright Daniel Berthereau, 2014-2016 (improvements, see [Daniel-KM])
+* Copyright Daniel Berthereau, 2014-2018 (improvements, see [Daniel-KM])
 
 
 [Omeka]: https://omeka.org
