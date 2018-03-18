@@ -119,7 +119,7 @@ class ContributionPlugin extends Omeka_Plugin_AbstractPlugin
             `multiple_files` TINYINT(1) UNSIGNED NOT NULL DEFAULT '0',
             `add_tags` TINYINT(1) UNSIGNED NOT NULL DEFAULT '0',
             PRIMARY KEY (`id`),
-            UNIQUE KEY `item_type_id` (`item_type_id`)
+            KEY `item_type_id` (`item_type_id`)
             ) ENGINE=InnoDB;";
         $this->_db->query($sql);
 
@@ -290,6 +290,12 @@ class ContributionPlugin extends Omeka_Plugin_AbstractPlugin
                 set_option('contribution_page_path', $this->_options['contribution_page_path']);
             }
         }
+
+        if (version_compare($oldVersion, '3.2', '<')) {
+            $this->_db->query("ALTER TABLE `{$this->_db->ContributionType}`
+                DROP INDEX `item_type_id`,
+                ADD INDEX `item_type_id` (`item_type_id`)");
+        }
     }
 
     /**
@@ -366,7 +372,7 @@ class ContributionPlugin extends Omeka_Plugin_AbstractPlugin
     {
         $acl = $args['acl'];
 
-        $acl->addRole(new Zend_Acl_Role('contribution-anonymous'), null);
+        $acl->addRole(new Zend_Acl_Role('contribution_anonymous'), null);
 
         $acl->addResource('Contribution_Contribution');
         $acl->allow(array('super', 'admin', 'researcher', 'contributor'), 'Contribution_Contribution');
