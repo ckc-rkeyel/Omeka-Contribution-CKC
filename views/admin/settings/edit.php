@@ -7,7 +7,12 @@
  */
 
 queue_js_file('contribution');
-queue_js_file('tiny_mce', 'javascripts/vendor/tiny_mce');
+$isOmekaBefore26 = version_compare(OMEKA_VERSION, '2.6', '<');
+if ($isOmekaBefore26):
+    queue_js_file('tiny_mce', 'javascripts/vendor/tiny_mce');
+else:
+    queue_js_file('tinymce.min', 'javascripts/vendor/tinymce/');
+endif;
 queue_js_string('setUpSettingsWysiwyg();');
 contribution_admin_header(array(__('Submission Settings')));
 ?>
