@@ -118,8 +118,12 @@ class ContributionPlugin extends Omeka_Plugin_AbstractPlugin
             `file_permissions` ENUM('Disallowed', 'Allowed', 'Required') NOT NULL,
             `multiple_files` TINYINT(1) UNSIGNED NOT NULL DEFAULT '0',
             `add_tags` TINYINT(1) UNSIGNED NOT NULL DEFAULT '0',
+                       
+            `upload_explanation` mediumtext COLLATE utf8_unicode_ci,
+            `form_preface` mediumtext COLLATE utf8_unicode_ci,
+            `form_title` tinytext COLLATE utf8_unicode_ci,
             PRIMARY KEY (`id`),
-            KEY `item_type_id` (`item_type_id`)
+            UNIQUE KEY `item_type_id` (`item_type_id`)
             ) ENGINE=InnoDB;";
         $this->_db->query($sql);
 
