@@ -11,12 +11,18 @@ queue_css_file('form');
 
 queue_js_file('contribution-public-form');
 //load user profiles js and css if needed
-if (get_option('contribution_user_profile_type') && plugin_is_active('UserProfiles')) {
+if(get_option('contribution_user_profile_type') && plugin_is_active('UserProfiles') ) {
     queue_js_file('admin-globals');
-    queue_js_file('tiny_mce', 'javascripts/vendor/tiny_mce');
+    $isOmekaBefore26 = version_compare(OMEKA_VERSION, '2.6', '<');
+    if ($isOmekaBefore26):
+        queue_js_file('tiny_mce', 'javascripts/vendor/tiny_mce');
+    else:
+        queue_js_file('tinymce.min', 'javascripts/vendor/tinymce/');
+    endif;
     queue_js_file('elements');
     queue_css_string("input.add-element {display: block}");
 }
+
 
 $itemTitle = strip_formatting(metadata($item, array('Dublin Core', 'Title')));
 if ($itemTitle == '') {
